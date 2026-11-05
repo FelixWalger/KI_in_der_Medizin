@@ -4,6 +4,9 @@ Dieses Repository enthält ausschließlich die Materialien für die
 Teilnehmenden des Science-College-Workshops. Es ist für die bereitgestellten
 Windows-Laptops mit VS Code vorbereitet.
 
+**Für Teilnehmende:** Bitte zuerst [SETUP.md](SETUP.md) lesen und die Schritte
+dort gemeinsam ausführen.
+
 Die verwendeten Bilder und Modelle sind Lehrmaterial. Sie sind kein
 medizinisches Diagnosewerkzeug und ihre Ergebnisse sind keine klinische
 Evidenz.
