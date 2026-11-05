@@ -1,0 +1,649 @@
+<!doctype html>
+<html lang="de" data-source-sha256="88a402be0890de59f1ac5ea572b58cd4c546a226ebd56d910b0afa793d711088">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Kompaktes Nachschlagewerk für Python und Machine Learning im Workshop">
+  <title>Python und Machine Learning Kompass</title>
+  <style>
+    :root {
+      --navy: #102a43;
+      --navy-2: #243b53;
+      --teal: #0f766e;
+      --orange: #b45309;
+      --ink: #17212b;
+      --muted: #52606d;
+      --paper: #ffffff;
+      --canvas: #eef3f6;
+      --line: #d7e0e7;
+      --soft: #f5f8fa;
+      --code: #132238;
+      --radius: 14px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--canvas);
+      font: 17px/1.62 -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    }
+    .hero {
+      color: white;
+      background: linear-gradient(125deg, var(--navy) 0%, #174866 62%, var(--teal) 100%);
+      padding: 54px max(24px, calc((100vw - 1180px) / 2));
+    }
+    .eyebrow {
+      margin: 0 0 10px;
+      font-size: .78rem;
+      font-weight: 750;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      opacity: .85;
+    }
+    .hero h1 { margin: 0; max-width: 820px; font-size: clamp(2rem, 4vw, 3.35rem); line-height: 1.08; }
+    .hero p { margin: 18px 0 0; max-width: 760px; color: #e4eef4; font-size: 1.08rem; }
+    .layout {
+      display: grid;
+      grid-template-columns: 270px minmax(0, 820px);
+      gap: 34px;
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 30px 24px 64px;
+      align-items: start;
+    }
+    nav {
+      position: sticky;
+      top: 20px;
+      max-height: calc(100vh - 40px);
+      overflow: auto;
+      padding: 18px 16px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    nav strong { display: block; margin: 0 0 8px; font-size: .83rem; letter-spacing: .06em; text-transform: uppercase; }
+    nav ul { margin: 0; padding-left: 0; list-style: none; }
+    nav ul ul { padding-left: 13px; }
+    nav li { margin: 3px 0; }
+    nav a { display: block; padding: 5px 7px; color: var(--navy-2); text-decoration: none; border-radius: 6px; font-size: .88rem; line-height: 1.3; }
+    nav a:hover, nav a:focus { color: var(--teal); background: #eaf5f3; }
+    main { min-width: 0; }
+    .readiness {
+      margin-bottom: 22px;
+      padding: 22px 24px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .readiness h2 { margin: 0 0 4px; font-size: 1.12rem; }
+    .readiness p { margin: 0 0 14px; color: var(--muted); font-size: .94rem; }
+    .check-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px 16px; }
+    .check-grid label { display: flex; gap: 8px; align-items: flex-start; font-size: .91rem; cursor: pointer; }
+    .check-grid input { margin-top: .3em; accent-color: var(--teal); }
+    .progress-track { height: 6px; margin-top: 15px; overflow: hidden; background: #dbe5ea; border-radius: 999px; }
+    .progress-bar { display: block; width: 0; height: 100%; background: var(--teal); transition: width .2s ease; }
+    article {
+      padding: 38px 46px 54px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 14px 34px rgba(16, 42, 67, .07);
+    }
+    h2, h3 { color: #000; line-height: 1.22; scroll-margin-top: 22px; }
+    h2 { margin: 42px 0 14px; padding-top: 7px; font-size: 1.55rem; border-top: 3px solid var(--teal); }
+    h2:first-child { margin-top: 0; }
+    h3 { margin: 28px 0 9px; font-size: 1.12rem; }
+    p { margin: 0 0 14px; }
+    ul, ol { margin: 0 0 17px; padding-left: 1.35em; }
+    li { margin: 5px 0; }
+    a { color: #075985; text-underline-offset: 2px; }
+    blockquote {
+      margin: 18px 0 22px;
+      padding: 14px 18px;
+      color: var(--navy);
+      background: #eef7f6;
+      border-left: 5px solid var(--teal);
+    }
+    blockquote p { margin: 0; }
+    .formula-card {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: .28em;
+      margin: 18px 0 24px;
+      padding: 19px 18px;
+      overflow-x: auto;
+      color: #0b2239;
+      background: linear-gradient(135deg, #f0f7fa, #edf8f6);
+      border: 1px solid #bdd9dc;
+      border-left: 5px solid var(--teal);
+      border-radius: 10px;
+      font: 1.22rem/1.25 "STIX Two Math", "Cambria Math", "Times New Roman", serif;
+      text-align: center;
+    }
+    .formula-card sub, .formula-card sup { font-size: .68em; line-height: 0; }
+    .formula-gap { margin-left: 2.1em; }
+    .fraction {
+      display: inline-grid;
+      grid-template-rows: auto auto;
+      align-items: center;
+      margin: 0 .12em;
+      vertical-align: middle;
+      line-height: 1.05;
+    }
+    .numerator { padding: 0 .28em .14em; border-bottom: 1.5px solid currentColor; }
+    .denominator { padding: .14em .28em 0; }
+    .implies { padding: 0 .35em; font-size: 1.18em; }
+    code { padding: .12em .35em; color: #7c2d12; background: #fff4e8; border-radius: 4px; font: .91em/1.4 "SFMono-Regular", Consolas, monospace; }
+    pre { position: relative; margin: 15px 0 22px; padding: 18px 20px; overflow: auto; color: #e7eef7; background: var(--code); border-radius: 10px; }
+    pre code { padding: 0; color: inherit; background: transparent; font-size: .88rem; }
+    .copy-button { position: absolute; top: 8px; right: 8px; padding: 5px 9px; color: #dbeafe; background: #28415f; border: 1px solid #4d6683; border-radius: 5px; cursor: pointer; font-size: .72rem; }
+    .table-wrap { margin: 16px 0 24px; overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; }
+    table { width: 100%; border-collapse: collapse; font-size: .91rem; }
+    th, td { padding: 11px 12px; border: 1px solid var(--line); vertical-align: middle; text-align: left; }
+    th { color: white; background: var(--navy-2); font-weight: 700; }
+    tbody tr:nth-child(even) { background: var(--soft); }
+    details { margin: 18px 0 24px; padding: 13px 16px; border: 1px solid var(--line); border-radius: 9px; background: var(--soft); }
+    summary { color: var(--navy); font-weight: 700; cursor: pointer; }
+    details[open] summary { margin-bottom: 12px; }
+    footer { max-width: 1180px; margin: 0 auto; padding: 0 24px 36px; color: var(--muted); font-size: .82rem; text-align: right; }
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      nav { position: static; max-height: none; }
+      nav > .toc > ul { columns: 2; column-gap: 20px; }
+      article { padding: 30px 27px 42px; }
+    }
+    @media (max-width: 560px) {
+      body { font-size: 16px; }
+      .hero { padding-top: 38px; padding-bottom: 38px; }
+      .layout { padding: 18px 12px 44px; }
+      nav > .toc > ul { columns: 1; }
+      .check-grid { grid-template-columns: 1fr; }
+      article { padding: 25px 19px 34px; }
+      th, td { padding: 9px 10px; }
+      .formula-card { justify-content: flex-start; font-size: 1.02rem; }
+      .formula-gap { width: 100%; margin: .65em 0 0; }
+    }
+    @media print {
+      @page { size: A4; margin: 15mm 14mm 17mm; }
+      body { color: #000; background: #fff; font-size: 10.5pt; line-height: 1.45; }
+      .hero { padding: 0 0 11mm; color: #000; background: #fff; }
+      .hero p { color: #333; }
+      .layout { display: block; max-width: none; margin: 0; padding: 0; }
+      nav, .copy-button, footer { display: none; }
+      .readiness, article { padding: 0; border: 0; border-radius: 0; box-shadow: none; }
+      .readiness { margin-bottom: 8mm; }
+      .progress-track { display: none; }
+      h2 { break-after: avoid; margin-top: 8mm; }
+      h3, blockquote, pre, table, details, .formula-card { break-inside: avoid; }
+      pre { white-space: pre-wrap; }
+      a { color: #000; text-decoration: none; }
+      * { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <p class="eyebrow">Workshop Referenz</p>
+    <h1>Python und Machine Learning Kompass</h1>
+    <p>Code nachschlagen, Ergebnisse einordnen und die nächste sinnvolle Prüfung auswählen.</p>
+  </header>
+  <div class="layout">
+    <nav aria-label="Inhaltsübersicht">
+      <strong>Direkt zu</strong>
+      <div class="toc">
+<ul>
+<li><a href="#so-nutzt-du-den-kompass">So nutzt du den Kompass</a></li>
+<li><a href="#aufgabenubersicht">Aufgabenübersicht</a></li>
+<li><a href="#der-machine-learning-ablauf">Der Machine Learning Ablauf</a></li>
+<li><a href="#python-kurzreferenz">Python Kurzreferenz</a><ul>
+<li><a href="#werte-und-datenstrukturen">Werte und Datenstrukturen</a></li>
+<li><a href="#funktionen-und-entscheidungen">Funktionen und Entscheidungen</a></li>
+</ul>
+</li>
+<li><a href="#bilder-als-arrays">Bilder als Arrays</a></li>
+<li><a href="#lernverlaufe-diagnostizieren">Lernverläufe diagnostizieren</a></li>
+<li><a href="#vorhersagen-prufen">Vorhersagen prüfen</a></li>
+<li><a href="#metriken-verstehen">Metriken verstehen</a><ul>
+<li><a href="#accuracy-wie-viel-stimmt-insgesamt">Accuracy: Wie viel stimmt insgesamt?</a></li>
+<li><a href="#precision-wie-zuverlassig-ist-die-vorhersage-8">Precision: Wie zuverlässig ist die Vorhersage „8“?</a></li>
+<li><a href="#recall-beziehungsweise-sensitivitat-wie-viele-echte-achten-werden-gefunden">Recall beziehungsweise Sensitivität: Wie viele echte Achten werden gefunden?</a></li>
+<li><a href="#spezifitat-wie-viele-dreien-werden-korrekt-zuruckgewiesen">Spezifität: Wie viele Dreien werden korrekt zurückgewiesen?</a></li>
+<li><a href="#f1-wie-lassen-sich-precision-und-recall-gemeinsam-betrachten">F1: Wie lassen sich Precision und Recall gemeinsam betrachten?</a></li>
+</ul>
+</li>
+<li><a href="#loss-verstehen">Loss verstehen</a></li>
+<li><a href="#transfer-learning-einordnen">Transfer Learning einordnen</a></li>
+<li><a href="#entscheidungsfragen-fur-jedes-ergebnis">Entscheidungsfragen für jedes Ergebnis</a></li>
+<li><a href="#glossar">Glossar</a></li>
+</ul>
+</div>
+
+    </nav>
+    <main>
+      <section class="readiness" aria-labelledby="readiness-title">
+        <h2 id="readiness-title">Persönlicher Arbeitsstand</h2>
+        <p>Markiere, was du bereits selbst erklären oder anwenden kannst. Die Auswahl bleibt nur in diesem Browser gespeichert.</p>
+        <div class="check-grid">
+          <label><input type="checkbox"> Arrayform und Index lesen</label>
+          <label><input type="checkbox"> Train Validierung und Test trennen</label>
+          <label><input type="checkbox"> Fit Muster diagnostizieren</label>
+          <label><input type="checkbox"> Konfidenz korrekt einordnen</label>
+          <label><input type="checkbox"> Metriken von Hand erklären</label>
+          <label><input type="checkbox"> Focal Loss zusammensetzen</label>
+        </div>
+        <div class="progress-track" aria-hidden="true"><span class="progress-bar"></span></div>
+      </section>
+      <article>
+        <p>Dieses Kurzskript ist das Nachschlagewerk zum
+<a href="00_grundlagen_python_ml.ipynb"><code>00_grundlagen_python_ml.ipynb</code></a> und zum
+biomedizinischen Hauptversuch. Es wiederholt nicht den Notebookablauf. Nutze es,
+wenn du eine Codezeile, eine Formel oder ein Ergebnis einordnen willst.</p>
+<h2 id="so-nutzt-du-den-kompass">So nutzt du den Kompass</h2>
+<ul>
+<li><strong>Vor einer Aufgabe:</strong> Suche den passenden Eintrag in der Aufgabenübersicht.</li>
+<li><strong>Bei einer Codefrage:</strong> Nutze die Python-Kurzreferenz.</li>
+<li><strong>Bei einem Ergebnis:</strong> Vergleiche es mit den Diagnose- und Metrikkarten.</li>
+<li><strong>Für die Diskussion:</strong> Trenne Beobachtung, Bedeutung und nächste Prüfung mit
+  <code>What?</code>, <code>So What?</code> und <code>Now What?</code>.</li>
+</ul>
+<h2 id="aufgabenubersicht">Aufgabenübersicht</h2>
+<table>
+<thead>
+<tr>
+<th>Notebook</th>
+<th>Eigener Beitrag</th>
+<th>Passender Abschnitt</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Aufgabe 1</td>
+<td>Listenindex auswählen</td>
+<td>Python Kurzreferenz</td>
+</tr>
+<tr>
+<td>Aufgabe 2</td>
+<td>Arrayform auslesen</td>
+<td>Bilder als Arrays</td>
+</tr>
+<tr>
+<td>Aufgabe 3</td>
+<td>Klasse, Konfidenz und Korrektheit bestimmen</td>
+<td>Vorhersagen prüfen</td>
+</tr>
+<tr>
+<td>Aufgabe 4</td>
+<td>Konfidenzschwelle setzen</td>
+<td>Vorhersagen prüfen</td>
+</tr>
+<tr>
+<td>Aufgabe 5</td>
+<td>Accuracy, Precision, Recall und F1 berechnen</td>
+<td>Metriken verstehen</td>
+</tr>
+<tr>
+<td>Aufgabe 6</td>
+<td>Focal Loss aus der Formel zusammensetzen</td>
+<td>Loss verstehen</td>
+</tr>
+</tbody>
+</table>
+<h2 id="der-machine-learning-ablauf">Der Machine Learning Ablauf</h2>
+<blockquote>
+<p><strong>Daten → Modell → Wahrscheinlichkeiten → Entscheidung → Metriken → nächste Prüfung</strong></p>
+</blockquote>
+<ol>
+<li>Das Modell passt seine Parameter an <strong>Trainingsdaten</strong> an.</li>
+<li><strong>Validierungsdaten</strong> helfen während der Entwicklung bei der Auswahl von
+   Einstellungen und Modell-Checkpoints.</li>
+<li><strong>Testdaten</strong> bleiben bis zur abschließenden Bewertung unberührt.</li>
+<li>Der Loss steuert das Training. Metriken bewerten anschließend Ergebnisse.</li>
+</ol>
+<p>Ein guter Trainingswert ist noch kein Beleg für Generalisierung. Entscheidend
+ist, ob das Ergebnis auf unabhängigen Daten Bestand hat.</p>
+<h2 id="python-kurzreferenz">Python Kurzreferenz</h2>
+<h3 id="werte-und-datenstrukturen">Werte und Datenstrukturen</h3>
+<pre><code class="language-python">anzahl_bilder = 1800
+lernrate = 0.001
+training_fertig = False
+klassen_namen = [&quot;3&quot;, &quot;8&quot;]
+bildform = (28, 28)
+versuch = {&quot;epochen&quot;: 4, &quot;batch&quot;: 64}
+</code></pre>
+<p>Python zählt Positionen ab null:</p>
+<pre><code class="language-python">klassen_namen[0]  # &quot;3&quot;
+klassen_namen[1]  # &quot;8&quot;
+</code></pre>
+<h3 id="funktionen-und-entscheidungen">Funktionen und Entscheidungen</h3>
+<pre><code class="language-python">anzahl_klassen = len(klassen_namen)
+vorhergesagte_klasse = np.argmax(wahrscheinlichkeiten)
+konfidenz = np.max(wahrscheinlichkeiten)
+ist_korrekt = vorhergesagte_klasse == wahres_label
+
+if konfidenz &gt;= 0.70:
+    entscheidung = &quot;anzeigen&quot;
+else:
+    entscheidung = &quot;prüfen lassen&quot;
+</code></pre>
+<p>Eine Funktion erhält Argumente und liefert einen Rückgabewert. Eine
+<code>if</code>-Bedingung wählt abhängig von <code>True</code> oder <code>False</code> einen Programmweg. <code>&gt;=</code>
+bedeutet „größer oder gleich“, also beispielsweise „mindestens 70 Prozent“.</p>
+<p>Mit <code>/</code> wird dividiert. Python 3 berechnet <code>3 / 4</code> als <code>0.75</code>. Wer Java kennt,
+sollte den Unterschied beachten: Dort kann die Division zweier Ganzzahlen eine
+Ganzzahldivision ergeben.</p>
+<h2 id="bilder-als-arrays">Bilder als Arrays</h2>
+<p>Ein Graustufenbild ist ein zweidimensionales NumPy-Array. Bei MNIST bedeutet
+<code>(28, 28)</code>: 28 Zeilen mal 28 Spalten. Jeder Eintrag beschreibt die Helligkeit
+eines Pixels.</p>
+<pre><code class="language-python">hoehe, breite = bild.shape
+ausschnitt = bild[10:15, 10:15]
+</code></pre>
+<p>Im Hauptversuch ist das Preprocessing vorbereitet. Änderungen an Skalierung,
+Farbräumen oder Bildgröße verändern die Information, die das Modell erhält,
+und benötigen deshalb eine fachliche Begründung.</p>
+<h2 id="lernverlaufe-diagnostizieren">Lernverläufe diagnostizieren</h2>
+<table>
+<thead>
+<tr>
+<th>Beobachtung</th>
+<th>Plausible Diagnose</th>
+<th>Nächste Prüfung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Trainings- und Validierungsleistung bleiben schlecht</td>
+<td>Underfitting oder Optimierungsproblem</td>
+<td>länger trainieren, Lernrate prüfen, Kapazität vorsichtig erhöhen</td>
+</tr>
+<tr>
+<td>Training verbessert sich weiter, Validierung kippt</td>
+<td>Overfitting durch Overtraining</td>
+<td>früheren Checkpoint und Early Stopping prüfen</td>
+</tr>
+<tr>
+<td>Training ist extrem gut, Validierung deutlich schlechter oder instabil</td>
+<td>kapazitätsbedingtes Overfitting-Risiko</td>
+<td>kleinere Baseline, Regularisierung und mehrere Seeds vergleichen</td>
+</tr>
+<tr>
+<td>interne Validierung gut, unabhängige Daten schlecht</td>
+<td>Datensatz- oder Shortcut-Overfitting</td>
+<td>nach Quelle oder Gruppe trennen und extern testen</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Underfitting ist kein verborgenes Overfitting.</strong> Solange Training und
+Validierung beide schlecht sind, hat das Modell die Trainingsaufgabe noch nicht
+ausreichend gelernt oder die Optimierung funktioniert nicht.</p>
+<p>„Overfitting by design“ ist kein einheitlicher Fachbegriff. Im Workshop meint
+er ein Risiko durch zu viel Modellkapazität, zu wenig wirksame Regularisierung
+oder ungeeignete Modellannahmen im Verhältnis zu Aufgabe und Daten. Ein großes
+Modell ist nicht automatisch overfitted. Bei abrupten Lernverläufen helfen
+dichte Checkpoints, mehrere Seeds und ein kleineres Vergleichsmodell.</p>
+<details>
+<summary>Vertiefung zu großen Modellen</summary>
+
+Modellgröße wirkt nicht immer monoton. Bei **Double Descent** kann der
+Testfehler nach einem kritischen Bereich erneut sinken. Beim **Grokking** wird
+zuerst der Trainingssatz beherrscht; die Generalisierung verbessert sich erst
+viel später. Beide Phänomene widersprechen einfachen Regeln wie „größer ist
+immer schlechter“.
+
+- [Zhang et al. zu Modellkapazität und Memorieren](https://arxiv.org/abs/1611.03530)
+- [Nakkiran et al. zu Deep Double Descent](https://arxiv.org/abs/1912.02292)
+- [Power et al. zu Grokking](https://arxiv.org/abs/2201.02177)
+
+</details>
+
+<h2 id="vorhersagen-prufen">Vorhersagen prüfen</h2>
+<p>Für die Klassen <code>[3, 8]</code> kann das Modell beispielsweise <code>[0.30, 0.70]</code>
+ausgeben. Es entscheidet sich für die 8 und meldet 70 Prozent Konfidenz. Ist das
+wahre Label eine 3, bleibt die Vorhersage falsch.</p>
+<div class="formula-card" role="math" aria-label="Vorhersageklasse gleich Index der größten Klassenwahrscheinlichkeit; Konfidenz gleich größte Klassenwahrscheinlichkeit."><span class="symbol">ŷ</span> = arg max<sub>k</sub> p<sub>k</sub><span class="formula-gap">Konfidenz = max<sub>k</sub> p<sub>k</sub></span></div>
+<ul>
+<li><strong>Klasse:</strong> Position des größten Ausgabewerts</li>
+<li><strong>Konfidenz:</strong> größter Ausgabewert</li>
+<li><strong>Korrektheit:</strong> Vergleich der gewählten Klasse mit dem wahren Label</li>
+<li><strong>Kalibrierung:</strong> Prüfung, ob Konfidenz und beobachtete Trefferhäufigkeit
+  zusammenpassen</li>
+</ul>
+<p>Eine Schwelle verändert, welche Fälle automatisch akzeptiert werden. Deshalb
+müssen Schwelle, zurückgestellte Fälle und resultierende Fehler gemeinsam
+berichtet werden.</p>
+<h2 id="metriken-verstehen">Metriken verstehen</h2>
+<p>Die Zeilen der Konfusionsmatrix sind die wahren Labels, die Spalten die
+Vorhersagen:</p>
+<table>
+<thead>
+<tr>
+<th>10 Testbilder</th>
+<th style="text-align: right;">vorhergesagt 3</th>
+<th style="text-align: right;">vorhergesagt 8</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>wahr 3</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td>wahr 8</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">3</td>
+</tr>
+</tbody>
+</table>
+<p>Für die Zielklasse 8 gilt: <code>TP = 3</code>, <code>FP = 1</code>, <code>FN = 2</code>, <code>TN = 4</code>.
+Insgesamt ist <code>N = TP + TN + FP + FN = 10</code>.</p>
+<h3 id="accuracy-wie-viel-stimmt-insgesamt">Accuracy: Wie viel stimmt insgesamt?</h3>
+<div class="formula-card" role="math" aria-label="Accuracy gleich richtig positive plus richtig negative Vorhersagen, geteilt durch die Gesamtzahl. Im Beispiel: drei plus vier, geteilt durch zehn, gleich 0,70.">Accuracy = <span class="fraction"><span class="numerator">TP + TN</span><span class="denominator">N</span></span> = <span class="fraction"><span class="numerator">3 + 4</span><span class="denominator">10</span></span> = 0,70</div>
+<h3 id="precision-wie-zuverlassig-ist-die-vorhersage-8">Precision: Wie zuverlässig ist die Vorhersage „8“?</h3>
+<div class="formula-card" role="math" aria-label="Precision für Klasse 8 gleich richtig positive, geteilt durch richtig positive plus falsch positive Vorhersagen. Im Beispiel: drei geteilt durch vier, gleich 0,75.">Precision<sub>8</sub> = <span class="fraction"><span class="numerator">TP</span><span class="denominator">TP + FP</span></span> = <span class="fraction"><span class="numerator">3</span><span class="denominator">3 + 1</span></span> = 0,75</div>
+<h3 id="recall-beziehungsweise-sensitivitat-wie-viele-echte-achten-werden-gefunden">Recall beziehungsweise Sensitivität: Wie viele echte Achten werden gefunden?</h3>
+<div class="formula-card" role="math" aria-label="Recall beziehungsweise Sensitivität für Klasse 8 gleich richtig positive, geteilt durch richtig positive plus falsch negative Vorhersagen. Im Beispiel: drei geteilt durch fünf, gleich 0,60.">Recall<sub>8</sub> = Sensitivität<sub>8</sub> = <span class="fraction"><span class="numerator">TP</span><span class="denominator">TP + FN</span></span> = <span class="fraction"><span class="numerator">3</span><span class="denominator">3 + 2</span></span> = 0,60</div>
+<h3 id="spezifitat-wie-viele-dreien-werden-korrekt-zuruckgewiesen">Spezifität: Wie viele Dreien werden korrekt zurückgewiesen?</h3>
+<div class="formula-card" role="math" aria-label="Spezifität für Klasse 8 gleich richtig negative, geteilt durch richtig negative plus falsch positive Vorhersagen. Im Beispiel: vier geteilt durch fünf, gleich 0,80.">Spezifität<sub>8</sub> = <span class="fraction"><span class="numerator">TN</span><span class="denominator">TN + FP</span></span> = <span class="fraction"><span class="numerator">4</span><span class="denominator">4 + 1</span></span> = 0,80</div>
+<h3 id="f1-wie-lassen-sich-precision-und-recall-gemeinsam-betrachten">F1: Wie lassen sich Precision und Recall gemeinsam betrachten?</h3>
+<div class="formula-card" role="math" aria-label="F1 für Klasse 8 ist zweimal Precision mal Recall, geteilt durch Precision plus Recall. Im Beispiel ergibt das ungefähr 0,667.">F1<sub>8</sub> = 2 · <span class="fraction"><span class="numerator">Precision<sub>8</sub> · Recall<sub>8</sub></span><span class="denominator">Precision<sub>8</sub> + Recall<sub>8</sub></span></span> = 2 · <span class="fraction"><span class="numerator">0,75 · 0,60</span><span class="denominator">0,75 + 0,60</span></span> ≈ 0,667</div>
+<p>Für die Klasse 3 ist <code>F1 = 8 / 11 ≈ 0,727</code>. Der Macro-F1 gibt beiden Klassen
+gleiches Gewicht:</p>
+<div class="formula-card" role="math" aria-label="Macro-F1 ist der Mittelwert der F1-Werte beider Klassen. Im Beispiel ergibt das ungefähr 0,697.">Macro-F1 = <span class="fraction"><span class="numerator">F1<sub>3</sub> + F1<sub>8</sub></span><span class="denominator">2</span></span> = <span class="fraction"><span class="numerator">0,727 + 0,667</span><span class="denominator">2</span></span> ≈ 0,697</div>
+<p>Die Accuracy von 70 Prozent verdeckt, dass nur 60 Prozent der echten Achten
+gefunden werden. Falsche Alarme senken Precision; übersehene Zielbeispiele
+senken Recall. Welche Fehler schwerer wiegen, müssen Menschen für den
+Anwendungskontext begründen.</p>
+<p>Bei zwei Klassen heißt Recall der Zielklasse häufig <strong>Sensitivität</strong>. Precision
+und Recall beantworten unterschiedliche Fragen und dürfen nicht miteinander
+vertauscht werden.</p>
+<h2 id="loss-verstehen">Loss verstehen</h2>
+<p>Die Cross-Entropy verwendet <code>p_t</code>, die Modellwahrscheinlichkeit der wahren
+Klasse:</p>
+<div class="formula-card" role="math" aria-label="Cross-Entropy-Loss für ein Beispiel gleich negativer natürlicher Logarithmus der Wahrscheinlichkeit der wahren Klasse.">L<sub>CE</sub>(p<sub>t</sub>) = −ln(p<sub>t</sub>)</div>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;"><code>p_t</code></th>
+<th style="text-align: right;">Cross-Entropy</th>
+<th>Einordnung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">0,90</td>
+<td style="text-align: right;">0,105</td>
+<td>kleine Strafe</td>
+</tr>
+<tr>
+<td style="text-align: right;">0,50</td>
+<td style="text-align: right;">0,693</td>
+<td>mittlere Strafe</td>
+</tr>
+<tr>
+<td style="text-align: right;">0,10</td>
+<td style="text-align: right;">2,303</td>
+<td>große Strafe</td>
+</tr>
+</tbody>
+</table>
+<p>Für die drei Beispiele beträgt der mittlere Loss:</p>
+<div class="formula-card" role="math" aria-label="Mittlerer Cross-Entropy-Loss der drei Beispiele gleich Summe der drei Loss-Werte, geteilt durch drei, ungefähr 1,034.">L̄<sub>CE</sub> = <span class="fraction"><span class="numerator">0,105 + 0,693 + 2,303</span><span class="denominator">3</span></span> ≈ 1,034</div>
+<p>Der Optimierer verändert Modellparameter, um den mittleren Loss zu senken.
+Loss und Bewertungsmetrik erfüllen verschiedene Aufgaben: Der Loss steuert das
+Lernen mit Wahrscheinlichkeiten; Accuracy, Precision, Recall und F1 bewerten
+getroffene Klassenentscheidungen.</p>
+<p>Focal Loss ergänzt einen Fokusfaktor:</p>
+<div class="formula-card" role="math" aria-label="Focal Loss gleich minus Alpha t mal eins minus Wahrscheinlichkeit der wahren Klasse, hoch Gamma, mal natürlicher Logarithmus dieser Wahrscheinlichkeit.">L<sub>focal</sub>(p<sub>t</sub>) = −α<sub>t</sub> (1 − p<sub>t</sub>)<sup>γ</sup> ln(p<sub>t</sub>)</div>
+<p>Dabei ist <code>p_t</code> die Wahrscheinlichkeit der wahren Klasse, <code>alpha_t</code> deren
+Klassengewicht und <code>gamma</code> die Stärke der Fokussierung.</p>
+<pre><code class="language-python">p_t = tf.reduce_sum(y_true * y_pred)
+alpha_t = tf.reduce_sum(y_true * alpha)
+focal_loss = -alpha_t * (1 - p_t) ** gamma * tf.math.log(p_t)
+</code></pre>
+<p>Bei <code>gamma = 2</code> wird ein Beispiel mit <code>p_t = 0,90</code> stark heruntergewichtet;
+ein Beispiel mit <code>p_t = 0,10</code> behält relativ mehr von seinem
+Cross-Entropy-Loss. <code>p_t</code> ist nicht die maximale Konfidenz. Auch eine sehr
+selbstsichere Fehlvorhersage besitzt ein kleines <code>p_t</code>.</p>
+<p>Bei <code>gamma = 0</code> ist der Fokusfaktor eins; Focal Loss entspricht dann bis auf
+die Klassengewichtung <code>alpha_t</code> der Cross-Entropy.</p>
+<div class="formula-card" role="math" aria-label="Für Gamma gleich null entspricht Focal Loss der mit Alpha t gewichteten Cross-Entropy.">γ = 0 <span class="implies">⟹</span> L<sub>focal</sub> = −α<sub>t</sub> ln(p<sub>t</sub>) = α<sub>t</sub> L<sub>CE</sub></div>
+<p>Focal Loss löst keine Daten- oder Fairnessprobleme automatisch. Falsch
+gelabelte Bilder und Ausreißer können relativ wichtiger werden.</p>
+<h2 id="transfer-learning-einordnen">Transfer Learning einordnen</h2>
+<pre><code class="language-text">vortrainierter Merkmalsrumpf → neuer Klassifikationskopf → acht Klassen
+          zunächst einfrieren          neu trainieren
+</code></pre>
+<p>Beim Fine-Tuning werden später einzelne Schichten des vortrainierten Rumpfs
+vorsichtig freigegeben. Vorwissen spart Rechenzeit, passt aber nicht
+automatisch zu histologischen Bildern. Deshalb werden trainierbare Schichten,
+unabhängige Metriken und Bildregionen gemeinsam geprüft.</p>
+<h2 id="entscheidungsfragen-fur-jedes-ergebnis">Entscheidungsfragen für jedes Ergebnis</h2>
+<ol>
+<li><strong>What?</strong> Was wurde tatsächlich gemessen oder beobachtet?</li>
+<li><strong>So What?</strong> Welche Fehler oder Grenzen werden dadurch sichtbar?</li>
+<li><strong>Now What?</strong> Welcher Vergleich könnte die Erklärung widerlegen oder
+   stützen?</li>
+</ol>
+<h2 id="glossar">Glossar</h2>
+<table>
+<thead>
+<tr>
+<th>Begriff</th>
+<th>Englischer Ausdruck</th>
+<th>Kurzdefinition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Merkmal</td>
+<td>feature</td>
+<td>Information, die das Modell nutzt</td>
+</tr>
+<tr>
+<td>Label</td>
+<td>label</td>
+<td>vorgegebene Zielklasse</td>
+</tr>
+<tr>
+<td>Vorhersage</td>
+<td>prediction</td>
+<td>vom Modell ausgegebene Entscheidung</td>
+</tr>
+<tr>
+<td>Konfidenz</td>
+<td>confidence</td>
+<td>größter Ausgabewert des Modells</td>
+</tr>
+<tr>
+<td>Loss</td>
+<td>loss</td>
+<td>Optimierungsgröße des Trainings</td>
+</tr>
+<tr>
+<td>Accuracy</td>
+<td>accuracy</td>
+<td>Anteil korrekter Vorhersagen</td>
+</tr>
+<tr>
+<td>Precision</td>
+<td>precision</td>
+<td>richtige Treffer unter den Vorhersagen einer Zielklasse</td>
+</tr>
+<tr>
+<td>Recall</td>
+<td>recall</td>
+<td>gefundene Beispiele einer tatsächlichen Zielklasse</td>
+</tr>
+<tr>
+<td>F1</td>
+<td>F1 score</td>
+<td>harmonisches Mittel aus Precision und Recall</td>
+</tr>
+<tr>
+<td>Makro-Mittel</td>
+<td>macro average</td>
+<td>Kennzahl je Klasse berechnen und gleichgewichtet mitteln</td>
+</tr>
+<tr>
+<td>Unteranpassung</td>
+<td>underfitting</td>
+<td>Training und Validierung bleiben schlecht</td>
+</tr>
+<tr>
+<td>Überanpassung</td>
+<td>overfitting</td>
+<td>Training passt, Generalisierung bleibt zurück</td>
+</tr>
+<tr>
+<td>Regularisierung</td>
+<td>regularization</td>
+<td>Maßnahmen gegen zu starke Anpassung an Trainingsdaten</td>
+</tr>
+<tr>
+<td>Übertragungslernen</td>
+<td>transfer learning</td>
+<td>vortrainierte Merkmale weiterverwenden</td>
+</tr>
+</tbody>
+</table>
+      </article>
+    </main>
+  </div>
+  <footer>Lokales Workshopmaterial · Quelle 88a402be0890</footer>
+  <script>
+    document.querySelectorAll('article table').forEach((table) => {
+      const wrapper = document.createElement('div');
+      wrapper.className = 'table-wrap';
+      table.parentNode.insertBefore(wrapper, table);
+      wrapper.appendChild(table);
+    });
+    document.querySelectorAll('pre').forEach((pre) => {
+      const button = document.createElement('button');
+      button.className = 'copy-button';
+      button.type = 'button';
+      button.textContent = 'Kopieren';
+      button.addEventListener('click', async () => {
+        await navigator.clipboard.writeText(pre.innerText.replace(/^Kopieren\n/, ''));
+        button.textContent = 'Kopiert';
+        setTimeout(() => button.textContent = 'Kopieren', 1200);
+      });
+      pre.appendChild(button);
+    });
+    const boxes = [...document.querySelectorAll('.check-grid input')];
+    const key = 'ex6-ml-kompass-progress';
+    const saved = JSON.parse(localStorage.getItem(key) || '[]');
+    boxes.forEach((box, index) => { box.checked = Boolean(saved[index]); });
+    const updateProgress = () => {
+      const state = boxes.map((box) => box.checked);
+      localStorage.setItem(key, JSON.stringify(state));
+      document.querySelector('.progress-bar').style.width = `${100 * state.filter(Boolean).length / state.length}%`;
+    };
+    boxes.forEach((box) => box.addEventListener('change', updateProgress));
+    updateProgress();
+  </script>
+</body>
+</html>

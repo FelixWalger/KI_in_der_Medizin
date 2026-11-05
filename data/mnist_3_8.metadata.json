@@ -1,0 +1,45 @@
+{
+  "name": "MNIST 3/8 workshop subset",
+  "source": "https://keras.io/api/datasets/mnist/",
+  "original_homepage": "http://yann.lecun.com/exdb/mnist/",
+  "license": "Creative Commons Attribution-Share Alike 3.0",
+  "copyright": "Yann LeCun and Corinna Cortes",
+  "seed": 313,
+  "original_labels": {
+    "0": 3,
+    "1": 8
+  },
+  "shape": [
+    28,
+    28
+  ],
+  "dtype": "uint8",
+  "value_range": [
+    0,
+    255
+  ],
+  "splits": {
+    "train": {
+      "size": 1200,
+      "class_counts": {
+        "3": 600,
+        "8": 600
+      }
+    },
+    "val": {
+      "size": 300,
+      "class_counts": {
+        "3": 150,
+        "8": 150
+      }
+    },
+    "test": {
+      "size": 300,
+      "class_counts": {
+        "3": 150,
+        "8": 150
+      }
+    }
+  },
+  "sha256": "1eb6884b33424f07f6557489e2e2f2e5c9971fbb8d69cba5f36b48544607c15d"
+}

@@ -1,0 +1,10 @@
+.venv/
+__pycache__/
+.ipynb_checkpoints/
+.pytest_cache/
+*.pyc
+
+# Lokale TensorFlow-Dataset-Caches und individuell erzeugte Modellartefakte
+tensorflow_datasets/
+models/
+results/

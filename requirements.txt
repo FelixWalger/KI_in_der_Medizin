@@ -1,0 +1,12 @@
+# Windows (x64), Python 3.11, CPU-only
+# Keine Apple-Silicon- oder GPU-spezifischen Pakete installieren.
+tensorflow==2.15.1
+tensorflow-datasets==4.9.3
+keras==2.15.0
+numpy==1.26.4
+scikit-learn==1.6.1
+matplotlib==3.9.4
+Pillow==11.3.0
+jupyterlab==4.3.6
+ipykernel==6.31.0
+Markdown==3.10.3
