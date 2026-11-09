@@ -1,0 +1,36 @@
+{
+  "dataset": "colorectal_histology",
+  "tfds_version": "2.0.0",
+  "homepage": "https://zenodo.org/record/53169#.XGZemKwzbmG",
+  "citation": "@article{kather2016multi,\n  title={Multi-class texture analysis in colorectal cancer histology},\n  author={Kather, Jakob Nikolas and Weis, Cleo-Aron and Bianconi, Francesco and Melchers, Susanne M and Schad, Lothar R and Gaiser, Timo and Marx, Alexander and Z{\"o}llner, Frank Gerrit},\n  journal={Scientific reports},\n  volume={6},\n  pages={27988},\n  year={2016},\n  publisher={Nature Publishing Group}\n}",
+  "license": "",
+  "label_names": [
+    "tumor",
+    "stroma",
+    "complex",
+    "lympho",
+    "debris",
+    "mucosa",
+    "adipose",
+    "empty"
+  ],
+  "count": 5000,
+  "shape": [
+    5000,
+    150,
+    150,
+    3
+  ],
+  "class_counts": [
+    625,
+    625,
+    625,
+    625,
+    625,
+    625,
+    625,
+    625
+  ],
+  "sha256": "a6f7420407b90c2015f209aa86a72180437a193f4dc19113e90a406e1261e80a",
+  "purpose": "Histologischer Lehrdatensatz, keine klinische Validierung"
+}

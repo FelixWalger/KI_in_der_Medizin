@@ -8,3 +8,8 @@ __pycache__/
 tensorflow_datasets/
 models/
 results/
+
+.DS_Store
+
+# Großes lokales Datenpaket separat durch die IT verteilen, nicht in Git aufnehmen.
+data/histologie.npz
