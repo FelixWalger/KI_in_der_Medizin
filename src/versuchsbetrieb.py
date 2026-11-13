@@ -42,6 +42,39 @@ def kontrolliere(name, antwort, erwartet):
     return ok
 
 
+def kontrolliere_klassengewichte(antwort, labels):
+    """Prüfe Aufgabe 2, ohne die Referenzrechnung im Notebook offenzulegen."""
+    from hauptversuch import class_weights
+
+    referenz = class_weights(labels, num_classes=8)
+    erwartet = np.array([referenz[klasse] for klasse in range(8)])
+    return kontrolliere("Klassen-Gewichte", antwort, erwartet)
+
+
+def kontrolliere_metriken(accuracy, precision, recall, f1, macro_f1, matrix, klassennamen):
+    """Prüfe die Rechenschritte mit einer gekapselten Referenz."""
+    from hauptversuch import metriken_aus_konfusionsmatrix
+
+    referenz = metriken_aus_konfusionsmatrix(matrix)
+    schritte = [
+        ("Accuracy", accuracy, referenz["accuracy"]),
+        ("Precision je Klasse", precision, referenz["precision_per_class"]),
+        ("Recall je Klasse", recall, referenz["recall_per_class"]),
+        ("F1 je Klasse", f1, referenz["f1_per_class"]),
+        ("Macro-F1", macro_f1, referenz["macro_f1"]),
+    ]
+    korrekt = [kontrolliere(name, antwort, erwartet) for name, antwort, erwartet in schritte]
+    if all(korrekt):
+        from hauptversuch import zeige_metriktabelle
+
+        referenz.update(accuracy=float(accuracy), precision_per_class=np.asarray(precision),
+                        recall_per_class=np.asarray(recall), f1_per_class=np.asarray(f1),
+                        macro_f1=float(macro_f1))
+        zeige_metriktabelle(referenz, klassennamen, title="Unsere berechneten Kennzahlen")
+        return True
+    return False
+
+
 def _fingerprint(config, x_train, y_train, x_val, y_val):
     digest = hashlib.sha256(json.dumps(config, sort_keys=True).encode())
     for array in (x_train, y_train, x_val, y_val):
@@ -145,13 +178,17 @@ def modelllauf(root, name, x_train, y_train, x_val, y_val, *, epochs=30,
     return model, history
 
 
-def werte_aus(root, name, model, history, x_test, y_test, klassennamen):
+def werte_aus(root, name, model, history, x_test, y_test, klassennamen, *,
+              kalibrierungsklasse="tumor"):
     """Auswertung mit getrennten Testbildern; gemessene Wahrscheinlichkeiten sichern."""
     import hauptversuch as hv
-    probabilities = model.predict(x_test, verbose=0)
+    probabilities = hv.predict_probabilities(model, x_test)
     metrics = hv.evaluate_probabilities(y_test, probabilities, num_classes=8)
     print(f'{name}: Accuracy={metrics["accuracy"]:.3f}, Macro-F1={metrics["macro_f1"]:.3f}')
+    hv.zeige_lernkurven(history, title=name)
     hv.plot_evaluation(probabilities, y_test, klassennamen, title=name)
+    hv.zeige_kalibrierungsdetails(y_test, probabilities, klassennamen, klasse=kalibrierungsklasse)
+    hv.zeige_metriktabelle(metrics, klassennamen, title=name)
     folder = Path(root) / 'results' / 'hauptversuch' / name
     folder.mkdir(parents=True, exist_ok=True)
     np.savez_compressed(folder / 'testvorhersagen.npz', probabilities=probabilities,

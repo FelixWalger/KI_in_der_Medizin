@@ -52,8 +52,12 @@ Wenn eine Fehlermeldung erscheint, zeigt sie der Workshopleitung.
 und wählt denselben vorbereiteten Kernel. Die Arbeitsfolien führen euch auch
 hier durch die Abschnitte.
 
-Lasst `TRAINING_STARTEN = False` stehen, solange ihr vorbereitete Ergebnisse
-auswertet. Meldet fehlende Daten oder Modellläufe der Leitung.
+Lasst `TRAINING_STARTEN = False` und `LAUFGRUPPE = "workshop_v2"` stehen,
+solange ihr die vorbereiteten Ergebnisse auswertet. Die Kapitel führen euch
+vom Datensatz und Modellaufbau über vier Versuche zur Bildinterpretation.
+Vor dem zweiten Modelllauf vergleicht ihr die Klassenverteilungen bei gleicher
+Gesamtzahl. Nach jedem Modell folgen konkrete Fragen; Vertiefungen sind
+ausklappbar. Meldet fehlende Daten oder Modellläufe der Leitung.
 
 **Wenn ihr nach Absprache ein Training startet:** Speichert vorher. Lasst VS Code
 und die Trainingszelle laufen, den Deckel offen und das Netzteil angeschlossen.

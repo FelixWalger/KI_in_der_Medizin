@@ -2,7 +2,7 @@
 
 Dieses Kurzskript ist das Nachschlagewerk zum
 [`00_grundlagen_python_ml.ipynb`](00_grundlagen_python_ml.ipynb) und zum
-biomedizinischen Hauptversuch. Es wiederholt nicht den Notebookablauf. Nutze es,
+biomedizinischen Hauptversuch. Nutze es,
 wenn du eine Codezeile, eine Formel oder ein Ergebnis einordnen willst.
 
 ## So nutzt du den Kompass
