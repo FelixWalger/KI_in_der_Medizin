@@ -99,19 +99,15 @@ und benötigen deshalb eine fachliche Begründung.
 | Beobachtung | Plausible Diagnose | Nächste Prüfung |
 | --- | --- | --- |
 | Trainings- und Validierungsleistung bleiben schlecht | Underfitting oder Optimierungsproblem | länger trainieren, Lernrate prüfen, Kapazität vorsichtig erhöhen |
-| Training verbessert sich weiter, Validierung kippt | Overfitting durch Overtraining | früheren Checkpoint und Early Stopping prüfen |
-| Training ist extrem gut, Validierung deutlich schlechter oder instabil | kapazitätsbedingtes Overfitting-Risiko | kleinere Baseline, Regularisierung und mehrere Seeds vergleichen |
+| Training verbessert sich weiter, Validierung war gut und wird schlechter | Overtraining | früheren guten Checkpoint wählen |
+| Training wird gut, Validierung bleibt im Lauf schwach | Overfitting ohne brauchbaren Checkpoint im gezeigten Lauf | kleineres Modell mit gleicher Datenaufteilung vergleichen |
 | interne Validierung gut, unabhängige Daten schlecht | Datensatz- oder Shortcut-Overfitting | nach Quelle oder Gruppe trennen und extern testen |
 
-**Underfitting ist kein verborgenes Overfitting.** Solange Training und
-Validierung beide schlecht sind, hat das Modell die Trainingsaufgabe noch nicht
-ausreichend gelernt oder die Optimierung funktioniert nicht.
-
-„Overfitting by design“ ist kein einheitlicher Fachbegriff. Im Workshop meint
-er ein Risiko durch zu viel Modellkapazität, zu wenig wirksame Regularisierung
-oder ungeeignete Modellannahmen im Verhältnis zu Aufgabe und Daten. Ein großes
-Modell ist nicht automatisch overfitted. Bei abrupten Lernverläufen helfen
-dichte Checkpoints, mehrere Seeds und ein kleineres Vergleichsmodell.
+Bleiben beide Kurven schwach, kann das Modell auch die Trainingsbilder noch
+nicht gut vorhersagen. Bei guter Trainingsleistung und schwacher Validierung
+kann das Modell zu flexibel für die verfügbaren Daten sein. Vergleicht mit
+einem kleineren Modell unter gleichen Bedingungen. Mehrere Läufe zeigen, wie
+stark der Befund vom Zufallsstart abhängt.
 
 <details>
 <summary>Vertiefung zu großen Modellen</summary>

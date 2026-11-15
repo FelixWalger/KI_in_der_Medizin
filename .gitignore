@@ -13,3 +13,7 @@ results/
 
 # Großes lokales Datenpaket separat durch die IT verteilen, nicht in Git aufnehmen.
 data/histologie.npz
+
+# Lokales Wiederherstellungspaket für den Hauptversuch
+/workshop_v2_daten_modelle.zip
+/paketinhalt.json

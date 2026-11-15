@@ -64,6 +64,22 @@ und die Trainingszelle laufen, den Deckel offen und das Netzteil angeschlossen.
 Ihr könnt den Bildschirm mit **Windows + L** sperren. Lasst den Laptop
 eingeschaltet und vermeidet Neustart und Energiesparmodus.
 
+### Hauptversuch wiederherstellen
+
+Das lokale Backup `workshop_v2_daten_modelle.zip` enthält die Histologiedaten
+und die vier fertigen Modellläufe. Wenn Dateien fehlen, nutzt mit der Leitung
+eine frische Kopie des Studi-Ordners. Legt die ZIP-Datei dort ab und führt
+im VS-Code-Terminal mit PowerShell aus:
+
+```powershell
+Expand-Archive -LiteralPath .\workshop_v2_daten_modelle.zip -DestinationPath . -Force
+```
+
+Danach liegen `data/histologie.npz` und die Modellstände unter
+`results/hauptversuch/`. Startet den Notebook-Kernel neu und führt den
+Hauptversuch mit `TRAINING_STARTEN = False` von oben aus. Beim Laden meldet
+jeder Lauf `30/30 Epochen`.
+
 <a id="science-slam"></a>
 ## 4. Unser gemeinsamer Science Slam
 
@@ -143,5 +159,5 @@ lokal und zusätzlich als PDF bereit. Das Präsentationsprogramm beginnt ab
 ## 5. Nachschlagen
 
 Den [Python-/ML-Kompass](notebooks/PYTHON_CRASHKURS.html) könnt ihr aus dem
-lokalen Ordner im Browser öffnen. Das [Originalskript des Instituts](Chapter_AML.pdf)
+lokalen Ordner im Browser öffnen. Das [Originalskript des Instituts](Hintergrund/Chapter_AML.pdf)
 ist eine freiwillige Vertiefung.

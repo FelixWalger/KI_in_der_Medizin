@@ -469,6 +469,7 @@ def kalibrierungsintervalle(y, probabilities, klasse, num_classes=8, n_bins=5):
 def zeige_kalibrierungsdetails(y, probabilities, klassennamen, klasse="tumor"):
     """Eine Klasse mit Fallzahlen lesen; leere Intervalle erzeugen keinen Punkt."""
     import matplotlib.pyplot as plt
+    from matplotlib.ticker import PercentFormatter
 
     if klasse not in klassennamen:
         raise ValueError("Eine Klasse aus klassennamen wählen.")
@@ -488,15 +489,19 @@ def zeige_kalibrierungsdetails(y, probabilities, klassennamen, klasse="tumor"):
                          xytext=(-5 if align_right else 5, 9),
                          ha="right" if align_right else "left",
                          textcoords="offset points", fontsize=11)
-    axes[0].set(ylabel=f"Beobachteter Anteil {klasse}", ylim=(-.04, 1.12),
-                title=f"Klasse {klasse} · Beschriftung: Klassenfälle / Bilder im Intervall")
+    axes[0].set(ylabel=f'Anteil mit Referenzlabel „{klasse}“\nim selben Intervall', ylim=(-.04, 1.12),
+                title=f'„{klasse}“ · Fälle / Bilder im Intervall')
+    axes[0].set_xlabel(f'Mittlere Modellwahrscheinlichkeit für „{klasse}“ je Intervall')
     axes[0].legend()
     axes[0].grid(alpha=.25)
+    axes[0].tick_params(axis="x", labelbottom=True)
+    axes[0].yaxis.set_major_formatter(PercentFormatter(1))
+    axes[1].xaxis.set_major_formatter(PercentFormatter(1))
     centers = (result["edges"][:-1] + result["edges"][1:]) / 2
     bars = axes[1].bar(centers, result["counts"], width=.18, color="#00549F")
     axes[1].bar_label(bars, padding=3)
-    axes[1].set(xlabel=f"Modellwert für {klasse} · fünf getrennte Intervalle",
-                ylabel="Bilder", xlim=(0, 1), xticks=result["edges"])
+    axes[1].set(xlabel=f'Modellwahrscheinlichkeit für „{klasse}“ · Grenzen der fünf Intervalle',
+                ylabel="Bilder je Intervall", xlim=(0, 1), xticks=result["edges"])
     axes[1].set_ylim(0, max(result["counts"]) * 1.25)
     fig.tight_layout()
     plt.show()
@@ -507,6 +512,7 @@ def zeige_kalibrierungsdetails(y, probabilities, klassennamen, klasse="tumor"):
 def plot_evaluation(probabilities, y, label_names, title=""):
     """Konfusionsmatrix und klassenweise Kalibrierung (nicht Top-Label-Accuracy)."""
     import matplotlib.pyplot as plt
+    from matplotlib.ticker import PercentFormatter
     from sklearn.calibration import calibration_curve
     labels, probabilities = _labels(y), _probabilities(probabilities, len(label_names))
     metrics = evaluate_probabilities(labels, probabilities, len(label_names))
@@ -522,7 +528,10 @@ def plot_evaluation(probabilities, y, label_names, title=""):
         observed, predicted = calibration_curve(labels == c, probabilities[:, c], n_bins=5, strategy="uniform")
         axes[1].plot(predicted, observed, marker=("o", "s", "^", "D", "v", "P", "X", "<")[c % 8], label=name)
     axes[1].plot([0, 1], [0, 1], "k--", label="ideal")
-    axes[1].set(xlabel="Mittlere Wahrscheinlichkeit für die jeweilige Klasse", ylabel="Beobachteter Anteil dieser Klasse", title="Klassenweise Kalibrierung", xlim=(0, 1), ylim=(0, 1))
+    axes[1].set(xlabel="Mittlere Modellwahrscheinlichkeit\nfür die Klasse je Intervall",
+                ylabel="Anteil mit diesem Referenzlabel\nim selben Intervall", title="Wahrscheinlichkeiten im Vergleich mit den Labels", xlim=(0, 1), ylim=(0, 1))
+    axes[1].xaxis.set_major_formatter(PercentFormatter(1))
+    axes[1].yaxis.set_major_formatter(PercentFormatter(1))
     axes[1].legend(fontsize=8)
     fig.suptitle(title + f" · Accuracy {metrics['accuracy']:.3f} · Macro-F1 {metrics['macro_f1']:.3f}")
     fig.tight_layout()

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="de" data-source-sha256="88a402be0890de59f1ac5ea572b58cd4c546a226ebd56d910b0afa793d711088">
+<html lang="de" data-source-sha256="90c16ba11f2e171e615fb9477352e3c2d4b8309a5cbdab311acacae397f0d5cd">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -239,7 +239,7 @@
       <article>
         <p>Dieses Kurzskript ist das Nachschlagewerk zum
 <a href="00_grundlagen_python_ml.ipynb"><code>00_grundlagen_python_ml.ipynb</code></a> und zum
-biomedizinischen Hauptversuch. Es wiederholt nicht den Notebookablauf. Nutze es,
+biomedizinischen Hauptversuch. Nutze es,
 wenn du eine Codezeile, eine Formel oder ein Ergebnis einordnen willst.</p>
 <h2 id="so-nutzt-du-den-kompass">So nutzt du den Kompass</h2>
 <ul>
@@ -360,14 +360,14 @@ und benötigen deshalb eine fachliche Begründung.</p>
 <td>länger trainieren, Lernrate prüfen, Kapazität vorsichtig erhöhen</td>
 </tr>
 <tr>
-<td>Training verbessert sich weiter, Validierung kippt</td>
-<td>Overfitting durch Overtraining</td>
-<td>früheren Checkpoint und Early Stopping prüfen</td>
+<td>Training verbessert sich weiter, Validierung war gut und wird schlechter</td>
+<td>Overtraining</td>
+<td>früheren guten Checkpoint wählen</td>
 </tr>
 <tr>
-<td>Training ist extrem gut, Validierung deutlich schlechter oder instabil</td>
-<td>kapazitätsbedingtes Overfitting-Risiko</td>
-<td>kleinere Baseline, Regularisierung und mehrere Seeds vergleichen</td>
+<td>Training wird gut, Validierung bleibt im Lauf schwach</td>
+<td>Overfitting ohne brauchbaren Checkpoint im gezeigten Lauf</td>
+<td>kleineres Modell mit gleicher Datenaufteilung vergleichen</td>
 </tr>
 <tr>
 <td>interne Validierung gut, unabhängige Daten schlecht</td>
@@ -376,14 +376,11 @@ und benötigen deshalb eine fachliche Begründung.</p>
 </tr>
 </tbody>
 </table>
-<p><strong>Underfitting ist kein verborgenes Overfitting.</strong> Solange Training und
-Validierung beide schlecht sind, hat das Modell die Trainingsaufgabe noch nicht
-ausreichend gelernt oder die Optimierung funktioniert nicht.</p>
-<p>„Overfitting by design“ ist kein einheitlicher Fachbegriff. Im Workshop meint
-er ein Risiko durch zu viel Modellkapazität, zu wenig wirksame Regularisierung
-oder ungeeignete Modellannahmen im Verhältnis zu Aufgabe und Daten. Ein großes
-Modell ist nicht automatisch overfitted. Bei abrupten Lernverläufen helfen
-dichte Checkpoints, mehrere Seeds und ein kleineres Vergleichsmodell.</p>
+<p>Bleiben beide Kurven schwach, kann das Modell auch die Trainingsbilder noch
+nicht gut vorhersagen. Bei guter Trainingsleistung und schwacher Validierung
+kann das Modell zu flexibel für die verfügbaren Daten sein. Vergleicht mit
+einem kleineren Modell unter gleichen Bedingungen. Mehrere Läufe zeigen, wie
+stark der Befund vom Zufallsstart abhängt.</p>
 <details>
 <summary>Vertiefung zu großen Modellen</summary>
 
@@ -613,7 +610,7 @@ unabhängige Metriken und Bildregionen gemeinsam geprüft.</p>
       </article>
     </main>
   </div>
-  <footer>Lokales Workshopmaterial · Quelle 88a402be0890</footer>
+  <footer>Lokales Workshopmaterial · Quelle 90c16ba11f2e</footer>
   <script>
     document.querySelectorAll('article table').forEach((table) => {
       const wrapper = document.createElement('div');

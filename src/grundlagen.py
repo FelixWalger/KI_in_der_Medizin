@@ -256,10 +256,10 @@ def zeige_fit_muster() -> None:
             "Validierung kippt nach Minimum",
         ),
         (
-            "Abrupter Verlauf",
+            "Validierung bleibt schwach",
             [1.25, 1.22, 1.18, 1.10, 0.45, 0.15, 0.08, 0.05],
-            [1.28, 1.24, 1.20, 1.15, 0.70, 0.82, 1.02, 1.18],
-            "kurzes oder instabiles Zeitfenster",
+            [1.28, 1.24, 1.20, 1.15, 1.05, 1.04, 1.06, 1.08],
+            "kein guter Modellstand im gezeigten Lauf",
         ),
     ]
 
@@ -267,9 +267,8 @@ def zeige_fit_muster() -> None:
     for ax, (title, train, val, note) in zip(axes.flat, muster):
         ax.plot(epochs, train, "o-", color="#0072B2", label="Training")
         ax.plot(epochs, val, "s--", color="#D55E00", label="Validierung")
-        ax.set_title(title, fontsize=12)
+        ax.set_title(f"{title}\n{note}", fontsize=11)
         ax.set_xlabel("Epoche")
-        ax.text(0.5, 0.04, note, transform=ax.transAxes, ha="center", fontsize=9.5)
         ax.grid(alpha=0.25)
     axes[0, 0].set_ylabel("Loss")
     axes[1, 0].set_ylabel("Loss")
@@ -278,7 +277,7 @@ def zeige_fit_muster() -> None:
     plt.tight_layout(rect=(0, 0, 1, 0.96))
     _zeige_abbildung(
         fig,
-        "Vier schematische Trainings- und Validierungs-Loss-Kurven für Underfitting, passende Lernphase, Overtraining und einen abrupten, instabilen Verlauf.",
+        "Vier schematische Trainings- und Validierungs-Loss-Kurven für Underfitting, passende Lernphase, Overtraining und Overfitting bei durchgehend schwacher Validierung.",
     )
 
 
